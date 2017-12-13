@@ -12,7 +12,7 @@
         'views/invoice_view.xml',
     ],
     'demo': [
-
+        'res/test_data.yml',
     ],
     'test': [
 

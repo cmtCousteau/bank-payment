@@ -32,4 +32,5 @@ class AccountInvoiceFree(models.TransientModel):
     @api.multi
     def invoice_free(self):
         inv_obj = self.env['account.invoice']
-        return inv_obj.cancel_payment_lines()
+        invoices = inv_obj.browse(self.env.context.get('active_ids'))
+        return invoices.cancel_payment_lines()

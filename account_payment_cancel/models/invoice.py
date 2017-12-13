@@ -20,8 +20,7 @@ class AccountInvoice(models.Model):
         pay_line_obj = self.env['account.payment.line']
         account_payment_cancel = self.env['account.payment.cancel']
 
-        active_ids = self.env.context.get('active_ids')
-        move_ids = self.browse(active_ids).mapped('move_id.id')
+        move_ids = self.mapped('move_id.id')
 
         move_line_ids = mov_line_obj.search([('move_id', 'in', move_ids)]).ids
         payment_lines = pay_line_obj.search([('move_line_id',
