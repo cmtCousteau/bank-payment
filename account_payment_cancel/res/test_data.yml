@@ -32,6 +32,7 @@
     type: bank
     bank_account_id: company_bank_post
     update_posted: True
+
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 # Create payment mode
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -45,29 +46,3 @@
     transfer_journal_id: !ref {model: account.journal, search: "[('type','=','bank')]"}
     transfer_account_id: !ref {model: account.account, search: "[('code','=','1090')]"}
     offsetting_account: 'transfer_account'
-#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-# Create invoice
-#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
--
-  !record {model: account.invoice, id: dd_invoice, view: False}:
-    company_id: base.main_company
-    journal_id: !ref {model: account.journal, search: "[('type','=','bank')]"}
-    currency_id: base.CHF
-    account_id: !ref {model: account.account, search: "[('code','=','1100')]"}
-    type : in_invoice
-    partner_id: customer
-    date_invoice: !eval "'%s-12-01' %(datetime.now().year)"
-    partner_bank_id: company_bank_post
-    payment_mode_id: dd_pay_mode
-    move_name: 'test invoice pain000'
-#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-# Create invoice line
-#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
--
-  !record {model: account.invoice.line, id: dd_invoice_line, view: False}:
-    account_id: !ref {model: account.account, search: "[('code','=','3200')]"}
-    name: 'test invoice line pain000'
-    price_unit: 600.0
-    quantity: 1.0
-    product_id: !ref {model: product.product, search: "[('default_code','=','E-COM09')]"}
-    invoice_id: dd_invoice

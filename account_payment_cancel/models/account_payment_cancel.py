@@ -1,4 +1,13 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+#
+#    Copyright (C) 2017 Compassion CH (http://www.compassion.ch)
+#    Releasing children from poverty in Jesus' name
+#    @author: Marco Monzione <marco.mon@windowslive.com>, Emanuel Cino
+#
+#    The licence is in the file __manifest__.py
+#
+##############################################################################
 from odoo import models
 
 
@@ -51,7 +60,7 @@ class AccountCancelPayment(models.AbstractModel):
             # The counter parth should always be unique.
             account_move_line_counterpart = self.env['account.move.line'].\
                 search([('full_reconcile_id', '=', full_reconcile_id),
-                        ('id', 'not in', all_account_move_lines.ids),],limit=1)
+                        ('id', 'not in', all_account_move_lines.ids)], limit=1)
 
             # Keep only the move lines that belong to the desired payment order
             filtered_move_lines_counterpart = account_move_line_counterpart.\
@@ -72,7 +81,8 @@ class AccountCancelPayment(models.AbstractModel):
         account_payment_line = self.env['account.payment.line'].search(
             [('order_id', '=', payment_order.id)])
         if len(account_payment_line) == 0 and \
-                        payment_order.state == 'uploaded':
+                payment_order.state == 'uploaded':
+
                 payment_order.action_done_cancel()
 
         # Add the message to the invoice and to the payment order
